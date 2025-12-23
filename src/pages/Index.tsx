@@ -1,13 +1,32 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { Navbar } from '@/components/Navbar';
+import { Loader } from '@/components/Loader';
+import { Hero } from '@/components/Hero';
+import { Features } from '@/components/Features';
+import { ProductGrid } from '@/components/ProductGrid';
+import { Editorial } from '@/components/Editorial';
+import { Trust } from '@/components/Trust';
+import { Footer } from '@/components/Footer';
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <>
+      {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
+      
+      <div className={isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}>
+        <Navbar />
+        <main>
+          <Hero />
+          <Features />
+          <ProductGrid />
+          <Editorial />
+          <Trust />
+        </main>
+        <Footer />
       </div>
-    </div>
+    </>
   );
 };
 
