@@ -31,15 +31,24 @@ export const Navbar = () => {
     setActiveMenu(null);
   }, [location]);
 
+  const handleMenuEnter = (menuName: string) => {
+    setActiveMenu(menuName);
+  };
+
+  const handleMenuLeave = () => {
+    setActiveMenu(null);
+  };
+
   return (
     <>
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'glass py-3' : 'bg-transparent py-6'
+          isScrolled ? 'glass py-3 shadow-soft' : 'bg-background/80 backdrop-blur-sm py-6'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+        onMouseLeave={handleMenuLeave}
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
@@ -60,8 +69,7 @@ export const Navbar = () => {
                 <div
                   key={link.name}
                   className="relative"
-                  onMouseEnter={() => link.hasMegaMenu && setActiveMenu(link.name)}
-                  onMouseLeave={() => setActiveMenu(null)}
+                  onMouseEnter={() => link.hasMegaMenu ? handleMenuEnter(link.name) : null}
                 >
                   <Link
                     to={link.href}
@@ -79,12 +87,18 @@ export const Navbar = () => {
 
             {/* Right Actions */}
             <div className="flex items-center gap-4">
-              <button className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted transition-colors duration-300">
+              <Link 
+                to="/search"
+                className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted transition-colors duration-300"
+              >
                 <Search className="w-5 h-5 text-foreground/80" />
-              </button>
-              <button className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted transition-colors duration-300">
+              </Link>
+              <Link 
+                to="/account"
+                className="hidden md:flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted transition-colors duration-300"
+              >
                 <User className="w-5 h-5 text-foreground/80" />
-              </button>
+              </Link>
               <Link 
                 to="/cart"
                 className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-muted transition-colors duration-300"
@@ -115,8 +129,8 @@ export const Navbar = () => {
           {activeMenu && (
             <MegaMenu
               activeMenu={activeMenu}
-              onMouseEnter={() => {}}
-              onMouseLeave={() => setActiveMenu(null)}
+              onMouseEnter={() => setActiveMenu(activeMenu)}
+              onMouseLeave={handleMenuLeave}
             />
           )}
         </AnimatePresence>

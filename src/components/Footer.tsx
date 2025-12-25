@@ -4,9 +4,26 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Instagram, Youtube, Twitter, Mail } from 'lucide-react';
 
 const footerLinks = {
-  shop: ['Jackets', 'Pants', 'Footwear', 'Accessories', 'Equipment'],
-  company: ['About Us', 'Sustainability', 'Careers', 'Press'],
-  support: ['Contact', 'Shipping', 'Returns', 'Size Guide', 'Care Instructions'],
+  shop: [
+    { name: 'Jackets', href: '/shop?category=jackets' },
+    { name: 'Pants', href: '/shop?category=pants' },
+    { name: 'Footwear', href: '/shop?category=footwear' },
+    { name: 'Accessories', href: '/shop?category=accessories' },
+    { name: 'Equipment', href: '/shop?category=equipment' },
+  ],
+  company: [
+    { name: 'About Us', href: '/about' },
+    { name: 'Sustainability', href: '/sustainability' },
+    { name: 'Careers', href: '/careers' },
+    { name: 'Press', href: '/press' },
+  ],
+  support: [
+    { name: 'Contact', href: '/contact' },
+    { name: 'Shipping', href: '/shipping' },
+    { name: 'Returns', href: '/returns' },
+    { name: 'Size Guide', href: '/size-guide' },
+    { name: 'Care Instructions', href: '/care' },
+  ],
 };
 
 const socialLinks = [
@@ -21,9 +38,9 @@ export const Footer = () => {
   const [hoveredText, setHoveredText] = useState(false);
 
   return (
-    <footer ref={containerRef} className="relative pt-32 pb-12 overflow-hidden">
+    <footer ref={containerRef} className="relative pt-32 pb-12 overflow-hidden bg-card">
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-alpine-950 via-background to-background" />
+      <div className="absolute inset-0 bg-gradient-to-t from-muted via-card to-card" />
       <div className="absolute inset-0 bg-gradient-radial from-primary/5 via-transparent to-transparent opacity-50" />
 
       <div className="container mx-auto px-6 relative">
@@ -50,8 +67,8 @@ export const Footer = () => {
                 <defs>
                   <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="hsl(var(--primary))" />
-                    <stop offset="50%" stopColor="hsl(var(--accent))" />
-                    <stop offset="100%" stopColor="hsl(var(--secondary))" />
+                    <stop offset="50%" stopColor="hsl(var(--secondary))" />
+                    <stop offset="100%" stopColor="hsl(var(--accent))" />
                   </linearGradient>
                   <mask id="textMask">
                     <text
@@ -134,7 +151,7 @@ export const Footer = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="w-full h-12 pl-12 pr-4 rounded-full bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors duration-300 font-body text-sm"
+                  className="w-full h-12 pl-12 pr-4 rounded-full bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors duration-300 font-body text-sm"
                 />
               </div>
               <button className="h-12 px-6 rounded-full bg-foreground text-background font-body text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors duration-300">
@@ -152,12 +169,12 @@ export const Footer = () => {
             <h4 className="font-display text-lg font-medium text-foreground mb-4">Shop</h4>
             <ul className="space-y-3">
               {footerLinks.shop.map((link) => (
-                <li key={link}>
+                <li key={link.name}>
                   <Link
-                    to="/shop"
+                    to={link.href}
                     className="font-body text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
                   >
-                    {link}
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -173,12 +190,12 @@ export const Footer = () => {
             <h4 className="font-display text-lg font-medium text-foreground mb-4">Company</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
-                <li key={link}>
+                <li key={link.name}>
                   <Link
-                    to="/about"
+                    to={link.href}
                     className="font-body text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
                   >
-                    {link}
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -194,12 +211,12 @@ export const Footer = () => {
             <h4 className="font-display text-lg font-medium text-foreground mb-4">Support</h4>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
-                <li key={link}>
+                <li key={link.name}>
                   <Link
-                    to="/about"
+                    to={link.href}
                     className="font-body text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
                   >
-                    {link}
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -233,12 +250,12 @@ export const Footer = () => {
           </div>
 
           <div className="flex items-center gap-6">
-            <a href="#" className="font-body text-xs text-muted-foreground hover:text-primary transition-colors">
+            <Link to="/privacy" className="font-body text-xs text-muted-foreground hover:text-primary transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="font-body text-xs text-muted-foreground hover:text-primary transition-colors">
+            </Link>
+            <Link to="/terms" className="font-body text-xs text-muted-foreground hover:text-primary transition-colors">
               Terms of Service
-            </a>
+            </Link>
           </div>
         </motion.div>
       </div>
